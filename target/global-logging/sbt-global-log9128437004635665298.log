@@ -1,0 +1,127 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(early(addPluginSbtFile="""C:\Users\LAPTOP\AppData\Local\Temp\idea.sbt"""), None, None)
+[debug] > Exec(addPluginSbtFile="""C:\Users\LAPTOP\AppData\Local\Temp\idea.sbt""", None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.10.6 (Microsoft Java 17.0.8.1)
+[debug]       Load.loadUnit: plugins took 80.1529ms
+[debug]       Load.loadUnit: defsScala took 0.3039ms
+[debug] [Loading] Scanning directory C:\Users\LAPTOP\.sbt\1.0\plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\LAPTOP\.sbt\1.0\plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 22.9243 ms
+[debug]           Load.resolveProject(global-plugins) took 55.1446ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: C:\Users\LAPTOP\.sbt\1.0\plugins, plugins: List(<none>))) took 101.3317ms
+[debug] [Loading] Done in C:\Users\LAPTOP\.sbt\1.0\plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 125.4229ms
+[debug]       Load.loadUnit: cleanEvalClasses took 0.2102ms
+[debug]     Load.loadUnit(file:/C:/Users/LAPTOP/.sbt/1.0/plugins/, ...) took 217.5235ms
+[debug]   Load.apply: load took 401.3707ms
+[debug]   Load.apply: resolveProjects took 6.799ms
+[debug]   Load.apply: finalTransforms took 55.2747ms
+[debug]   Load.apply: config.delegates took 6.7616ms
+[debug]   Load.apply: Def.make(settings)... took 358.3274ms
+[debug]   Load.apply: structureIndex took 71.173ms
+[debug]   Load.apply: mkStreams took 1.6411ms
+[info] loading global plugins from C:\Users\LAPTOP\.sbt\1.0\plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 1883.192ms
+[debug]           Load.loadUnit: plugins took 14.7608ms
+[debug]           Load.loadUnit: defsScala took 0.0031ms
+[debug] [Loading] Scanning directory D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala\project
+[debug]             Load.loadUnit: mkEval took 4.7277ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala\project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 1.3319 ms
+[info] loading settings for project gmk-scala-build from idea.sbt...
+[debug]               Load.resolveProject(gmk-scala-build) took 3.3681ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id gmk-scala-build, base: D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala\project, plugins: List(<none>))) took 5.1633ms
+[debug] [Loading] Done in D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala\project, returning: (gmk-scala-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 1652.2114ms
+[debug]           Load.loadUnit: cleanEvalClasses took 6.1303ms
+[debug]         Load.loadUnit(file:/D:/Aalto/CS/CS-E4800%20-%20Artificial%20Intelligence%20D/gmk-scala/project/, ...) took 1673.7737ms
+[debug]       Load.apply: load took 1674.9017ms
+[debug]       Load.apply: resolveProjects took 0.1063ms
+[debug]       Load.apply: finalTransforms took 9.0559ms
+[debug]       Load.apply: config.delegates took 0.2829ms
+[debug]       Load.apply: Def.make(settings)... took 56.6661ms
+[debug]       Load.apply: structureIndex took 21.2828ms
+[debug]       Load.apply: mkStreams took 0.003ms
+[info] loading project definition from D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala\project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug]     Load.loadUnit: plugins took 2500.1207ms
+[debug]     Load.loadUnit: defsScala took 0.0015ms
+[debug] [Loading] Scanning directory D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala
+[debug]       Load.loadUnit: mkEval took 0.1761ms
+[debug] [Loading] Found root project root w/ remaining 
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(org.jetbrains.sbt.StructurePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(org.jetbrains.sbt.IdeaShellPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.StructurePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.IdeaShellPlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.SemanticdbPlugin,sbt.plugins.JUnitXmlReportPlugin,org.jetbrains.sbt.IdeaShellPlugin,org.jetbrains.sbt.StructurePlugin,sbt.plugins.MiniDependencyTreePlugin)
+[debug] Plugins.deducer#function took 1.2883 ms
+[info] loading settings for project root from build.sbt...
+[debug]         Load.resolveProject(root) took 19.4591ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id root, base: D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala, plugins: List(<none>))) took 21.5781ms
+[debug] [Loading] Done in D:\Aalto\CS\CS-E4800 - Artificial Intelligence D\gmk-scala, returning: (root)
+[debug]     Load.loadUnit: loadedProjectsRaw took 688.7564ms
+[debug]     Load.loadUnit: cleanEvalClasses took 5.2771ms
+[debug]   Load.loadUnit(file:/D:/Aalto/CS/CS-E4800%20-%20Artificial%20Intelligence%20D/gmk-scala/, ...) took 3194.8388ms
+[debug] Load.apply: load took 3196.1141ms
+[debug] Load.apply: resolveProjects took 0.1027ms
+[debug] Load.apply: finalTransforms took 25.6711ms
+[debug] Load.apply: config.delegates took 0.2236ms
+[debug] Load.apply: Def.make(settings)... took 45.0953ms
+[debug] Load.apply: structureIndex took 23.1816ms
+[debug] Load.apply: mkStreams took 0.0029ms
+[info] set current project to gmk-scala (in build file:/D:/Aalto/CS/CS-E4800%20-%20Artificial%20Intelligence%20D/gmk-scala/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(idea-shell, None, None)
