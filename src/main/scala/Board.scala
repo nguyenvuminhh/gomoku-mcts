@@ -6,32 +6,37 @@ import Constants.{CLAMP_DIST, SIZE}
 
 
 class Board (
-    val matrix: Array[Array[Byte]] = Array.fill(SIZE, SIZE)(0),
+    val matrix: Array[Array[Int]] = Array.fill(SIZE, SIZE)(0),
+    var currentTurn: Int = 1,
+    var step: Int = 0,
     ):
-    var step: Int = 0
-
-    var winner: Byte = 2
+    var winner: Int = 2
 
     override def hashCode(): Int = matrix.map(_.toSeq).toSeq.hashCode()
 
-    override def clone(): Board = new Board(matrix.map(_.clone()))
+    override def clone(): Board = new Board(matrix.map(_.clone()), currentTurn, step)
 
     def isOccupied(x: Int, y: Int): Boolean = matrix(y)(x) != 0
 
     def isValidCoord(x: Int, y: Int) = (0 <= x && x < SIZE && 0 <= y && y < SIZE)
 
-    def placeStone(x: Int, y: Int, value: Byte): (Int, Boolean) =
+    def placeStone(xy: (Int, Int), value: Int): (Int, Boolean) = placeStone(xy._1, xy._2, value)
+    
+    def placeStone(x: Int, y: Int, value: Int): (Int, Boolean) =
         require(math.abs(value) == 1, "Value must be 1 or -1")
         require(isValidCoord(x, y), "Coord must be valid")
         require(!isOccupied(x, y), "Cell must be empty")
+//        require(currentTurn == value)
         step += 1
         matrix(y)(x) = value
         if step == SIZE * SIZE then
+            winner = 0
             return (0, true)
 
         if checkTerminal(x, y, value) then
+            winner = value
             return (value, true)
-
+        currentTurn = -currentTurn
         (0, false)
 
     def removeStone(x: Int, y: Int) =
@@ -40,6 +45,7 @@ class Board (
         step -= 1
         matrix(y)(x) = 0
         winner = 2
+        currentTurn = -currentTurn
 
 
     private def checkTerminal(x: Int, y: Int, player: Int): Boolean =
@@ -47,11 +53,11 @@ class Board (
             var count = 1
             var done = false
             while !done do
-                for (d <- 1 to 4)
+                for (d <- 1 to 4) do
                     val nx = x + d * dx
                     val ny = y + d * dy
                     if !isValidCoord(nx, ny) || matrix(ny)(nx) != player then
-                        done = true
+                        return count
                     else
                         count += 1
                 done = true
@@ -60,8 +66,8 @@ class Board (
         val directions = Seq((1, 0), (0, 1), (1, 1), (1, -1)) // Horizontal, vertical, diagonal, anti-diagonal
         return directions.exists { (dx, dy) => countStones(dx, dy) + countStones(-dx, -dy) - 1 >= 5 }
 
-    def generateMoves(player: Byte, sorted: Boolean): Vector[(Byte, Byte)] =
-        val moveList = ArrayBuffer[(Byte, Byte)]()
+    def generateMoves(): Vector[(Int, Int)] =
+        val moveList = ArrayBuffer[(Int, Int)]()
 
         for
             i <- 0 until SIZE
@@ -76,7 +82,7 @@ class Board (
                         }
                     }
                     if hasStoneNearby then
-                        val move = (i.toByte, j.toByte)
+                        val move = (i.toInt, j.toInt)
                         moveList += move
 
         moveList.toVector

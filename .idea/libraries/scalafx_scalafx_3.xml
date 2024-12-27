@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="scalafx.scalafx_3" type="repository">
+    <properties maven-id="org.scalafx:scalafx_3:20.0.0-R31" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/scalafx/scalafx_3/20.0.0-R31/scalafx_3-20.0.0-R31.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala3-library_3/3.0.2/scala3-library_3-3.0.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.13.6/scala-library-2.13.6.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/20/javafx-base-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/20/javafx-base-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/20/javafx-fxml-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/20/javafx-fxml-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/20/javafx-graphics-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/20/javafx-graphics-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/20/javafx-media-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-media/20/javafx-media-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-swing/20/javafx-swing-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-swing/20/javafx-swing-20-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/20/javafx-web-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-web/20/javafx-web-20-win.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

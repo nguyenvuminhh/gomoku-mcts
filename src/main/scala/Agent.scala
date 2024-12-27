@@ -10,9 +10,9 @@ class Agent(private var board: Board) {
 
 object Agent {
     val WIN_SCORE: Int = 100_000_000
-    def calculateNextMove(depth: Int, board: Board): (Byte, Byte, Double) =
+    def calculateNextMove(depth: Int, board: Board): (Int, Int, Double) =
         // Block the board for AI to make a decision.
-        var move: Array[Byte] = Array(0, 0)
+        var move: Array[Int] = Array(0, 0)
         val bestMove = Agent.minimaxSearchAB(depth, board, 1, alpha = -Double.MaxValue, beta = Double.MaxValue)
         bestMove
     def evaluateBoard(board: Board): Double =
@@ -25,7 +25,7 @@ object Agent {
         println("===================================")
         AIScore*1.0 / (playerScore + 1e-9)
 
-    def getScore(matrix: Array[Array[Byte]], forAI: Boolean): Int =
+    def getScore(matrix: Array[Array[Int]], forAI: Boolean): Int =
         evaluateHorizontal(matrix, forAI) +
         evaluateVertical(matrix, forAI) +
         evaluateDiagonal(matrix, forAI) +
@@ -41,19 +41,19 @@ object Agent {
      * @param beta      The best already explored option along the path to the minimizer.
      * @return A tuple containing the score and the move coordinates.
      */
-    def minimaxSearchAB(depth: Int, board: Board, player: Byte, alpha: Double, beta: Double): (Byte, Byte, Double) =
+    def minimaxSearchAB(depth: Int, board: Board, player: Int, alpha: Double, beta: Double): (Int, Int, Double) =
         if depth == 0 then return (-1, -1, random())
-        val allPossibleMoves: Vector[(Byte, Byte)] = board.generateMoves(player, false)
+        val allPossibleMoves: Vector[(Int, Int)] = board.generateMoves()
         if (allPossibleMoves.isEmpty) then return (-1, -1, 0)
         if player == 1 then
             var value = Double.MinValue
-            var bestX: Byte = -1
-            var bestY: Byte = -1
+            var bestX: Int = -1
+            var bestY: Int = -1
             var currentAlpha = alpha
 
             for move <- allPossibleMoves do
                 board.placeStone(move._1, move._2, player)
-                val eval = minimaxSearchAB(depth - 1, board, (-player).toByte, currentAlpha, beta)._3
+                val eval = minimaxSearchAB(depth - 1, board, (-player).toInt, currentAlpha, beta)._3
                 board.removeStone(move._1, move._2)
                 println("c: " + move + " h: " + eval + " d: " + depth)
                 if eval > value then
@@ -67,13 +67,13 @@ object Agent {
 
         else
             var value = Double.MaxValue
-            var bestX: Byte = -1
-            var bestY: Byte = -1
+            var bestX: Int = -1
+            var bestY: Int = -1
             var currentBeta = beta
 
             for move <- allPossibleMoves do
                 board.placeStone(move._1, move._2, player)
-                val eval = minimaxSearchAB(depth - 1, board, (player * -1).toByte, alpha, currentBeta)._3
+                val eval = minimaxSearchAB(depth - 1, board, (player * -1).toInt, alpha, currentBeta)._3
                 board.removeStone(move._1, move._2)
                 println("c: " + move + " h: " + eval + " d: " + depth)
                 if eval < value then
@@ -112,7 +112,7 @@ object Agent {
 //        None
 //    }
 
-    def evaluateHorizontal(boardMatrix: Array[Array[Byte]], forAI: Boolean): Int =
+    def evaluateHorizontal(boardMatrix: Array[Array[Int]], forAI: Boolean): Int =
         val evaluations = Array(0, 2, 0) // [0] -> consecutive count, [1] -> block count, [2] -> score
 
         for
@@ -125,7 +125,7 @@ object Agent {
 
         evaluations(2)
 
-    def evaluateVertical(boardMatrix: Array[Array[Byte]], forAI: Boolean): Int =
+    def evaluateVertical(boardMatrix: Array[Array[Int]], forAI: Boolean): Int =
         val evaluations = Array(0, 2, 0)
 
         for
@@ -138,7 +138,7 @@ object Agent {
         
         evaluations(2)
 
-    def evaluateDiagonal(boardMatrix: Array[Array[Byte]], forAI: Boolean): Int =
+    def evaluateDiagonal(boardMatrix: Array[Array[Int]], forAI: Boolean): Int =
         val evaluations = Array(0, 2, 0)
 
         for k <- (1 - SIZE) until SIZE do
@@ -151,7 +151,7 @@ object Agent {
 
         evaluations(2)
 
-    def evaluateAntiDiagonal(boardMatrix: Array[Array[Byte]], forAI: Boolean): Int =
+    def evaluateAntiDiagonal(boardMatrix: Array[Array[Int]], forAI: Boolean): Int =
         val evaluations = Array(0, 2, 0)
 
         for k <- 0 to (2 * (SIZE - 1)) do
@@ -167,7 +167,7 @@ object Agent {
     /**
      * Evaluates the current direction (horizontal, vertical, or diagonal).
      */
-    def evaluateDirections(boardMatrix: Array[Array[Byte]], i: Int, j: Int, forAI: Boolean, eval: Array[Int]): Unit = {
+    def evaluateDirections(boardMatrix: Array[Array[Int]], i: Int, j: Int, forAI: Boolean, eval: Array[Int]): Unit = {
         // Check if the selected player has a stone in the current cell
         if (boardMatrix(i)(j) == (if (forAI) 1 else -1)) {
             // Increment consecutive stones count

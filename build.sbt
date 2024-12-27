@@ -8,3 +8,4 @@ lazy val root = (project in file("."))
     name := "gmk-scala"
   )
 
+libraryDependencies += "org.scalafx" %% "scalafx" % "22.0.0-R33"
