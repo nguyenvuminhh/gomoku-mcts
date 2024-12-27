@@ -7,7 +7,8 @@ object Constants:
   val BLOCKABLE_WIN = 100_000
   val STRGHT_THREE = 10_000
   val BLK_THREE = 1_000
-  val MCTSTHRESHOLD = 30000
+  val MCTSTHRESHOLD = 20000
+  val MCTSSIMULATIONCOUNT = 3
   val DEPTH = 4
 //
 //  val PATTERNS: Vector[(Vector[Byte], Vector[Byte], Vector[Byte], Int, Int)] = Vector(

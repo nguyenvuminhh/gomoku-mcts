@@ -8,15 +8,16 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true):
     var winner: Int = 0
     val mainBoard = new Board(step = 0, currentTurn = if aiStarts then 1 else -1)
 
+    var agent = MCTSAgent(mainBoard.clone())
 
     def start(): Unit =
         if aiStarts then
             val mid = SIZE / 2
             playMove(mid, mid, 1)
             isPlayersTurn = true
-
-    val agent = MCTSAgent(mainBoard.clone())
-    agent.start()
+            agent = MCTSAgent(mainBoard.clone())
+            print(mainBoard)
+        agent.start()
 
     def playMove(x: Int, y: Int, player: Int): Boolean =
         if !(0 <= x && x < SIZE && 0 <= y && y < SIZE) || mainBoard.isOccupied(x, y) then return false
@@ -41,7 +42,7 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true):
         if !playMove(x, y, -1) then
             isPlayersTurn = true
             return false
-
+        print("HIA")
         val (bestX, bestY) = agent.updateOpponentMoveAndGetBestMove((x, y))
 
         if bestX == -1 then

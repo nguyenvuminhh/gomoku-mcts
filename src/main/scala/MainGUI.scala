@@ -12,7 +12,7 @@ object MainGUI extends JFXApp3 {
     override def start(): Unit = {
         val game = new Game(aiStarts = true, VERBOSE = false)
         game.start()
-        Thread.sleep(1000)
+        
         stage = new JFXApp3.PrimaryStage {
             title = "Gomoku Game"
             width = 800

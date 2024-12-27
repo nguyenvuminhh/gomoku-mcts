@@ -16,9 +16,15 @@ class Node(
 
     private def ucb =
         if visitCount == 0 then Double.MaxValue
-        else totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / (visitCount + epsilon))
+        else if childrens.values.exists(child => child.winner.contains(-1)) then Double.MinValue
+        else totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
+    private def metric =
+        if childrens.values.exists(child => child.winner.contains(-1)) then
+            Double.MinValue
+        else
+            visitCount*1.0
 
-    def bestMove: ((Int, Int), Node) = childrens.maxBy(kv => kv._2.visitCount)
+    def bestMove: ((Int, Int), Node) = if childrens.nonEmpty then childrens.maxBy(kv => kv._2.metric) else ((-1, -1), null)
 
     @tailrec
     final def select: Node =
@@ -45,31 +51,37 @@ class Node(
         if parent != null then parent.update(value)
 
     def simulation(): Unit =
+//        println(this.visitCount)
         // Selection
-        val nodeToExpand = select
+        var simulationCount = 0
+        while simulationCount < Constants.MCTSSIMULATIONCOUNT do
+            val nodeToExpand = select
+            // Expansion
+            val newNode = if nodeToExpand.winner.nonEmpty then nodeToExpand
+            else nodeToExpand.expand()
 
-        // Expansion
-        val newNode = if nodeToExpand.winner.nonEmpty then nodeToExpand
-        else nodeToExpand.expand()
+            // Simulation (only if no winner yet)
+            val result = if newNode.winner.nonEmpty then newNode.winner.get
+            else {
+                val dummyBoard = newNode.board.clone()
 
-        // Simulation (only if no winner yet)
-        val result = if newNode.winner.nonEmpty then newNode.winner.get
-        else {
-            val dummyBoard = newNode.board.clone()
-            print(dummyBoard)
+                var simResult = (0, false)
+                var turn = newNode.nextPlayerTurn
+                while !simResult._2 do
+                    val moves = dummyBoard.generateMoves()
+                    if moves.isEmpty then simResult = (0, true)
+                    else
+                        val randomMove = moves(Random.nextInt(moves.length))
+                        simResult = dummyBoard.placeStone(randomMove, turn)
+                        turn = -turn
+                simResult._1
+            }
+            simulationCount += 1
+            // Backpropagation
+            newNode.update(result)
 
-            var simResult = (0, false)
-            var turn = newNode.nextPlayerTurn
-            while !simResult._2 do
-//                println(dummyBoard)
-                val moves = dummyBoard.generateMoves()
-                if moves.isEmpty then simResult = (0, true)
-                else
-                    val randomMove = moves(Random.nextInt(moves.length))
-                    simResult = dummyBoard.placeStone(randomMove, turn)
-                    turn = -turn
-            simResult._1
-        }
-
-        // Backpropagation
-        newNode.update(result)
+    override def toString: String =
+        "Current Board: \n" +
+        board.toString() + "\n" +
+        "Value: " + totalValue + " | Visit counts: " + visitCount + "\n" +
+        "Has failed child: " + childrens.values.exists(child => child.winner.contains(-1))

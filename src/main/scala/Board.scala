@@ -18,7 +18,7 @@ class Board (
 
     def isOccupied(x: Int, y: Int): Boolean = matrix(y)(x) != 0
 
-    def isValidCoord(x: Int, y: Int) = (0 <= x && x < SIZE && 0 <= y && y < SIZE)
+    private def isValidCoord(x: Int, y: Int) = (0 <= x && x < SIZE && 0 <= y && y < SIZE)
 
     def placeStone(xy: (Int, Int), value: Int): (Int, Boolean) = placeStone(xy._1, xy._2, value)
     
@@ -26,7 +26,7 @@ class Board (
         require(math.abs(value) == 1, "Value must be 1 or -1")
         require(isValidCoord(x, y), "Coord must be valid")
         require(!isOccupied(x, y), "Cell must be empty")
-//        require(currentTurn == value)
+        require(currentTurn == value)
         step += 1
         matrix(y)(x) = value
         if step == SIZE * SIZE then
@@ -39,14 +39,13 @@ class Board (
         currentTurn = -currentTurn
         (0, false)
 
-    def removeStone(x: Int, y: Int) =
+    def removeStone(x: Int, y: Int): Unit =
         require(isValidCoord(x, y), "Coord must be valid")
         require(isOccupied(x, y), "Cell must not be empty")
         step -= 1
         matrix(y)(x) = 0
         winner = 2
         currentTurn = -currentTurn
-
 
     private def checkTerminal(x: Int, y: Int, player: Int): Boolean =
         def countStones(dx: Int, dy: Int): Int =

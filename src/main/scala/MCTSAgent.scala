@@ -1,4 +1,4 @@
-import Constants.MCTSTHRESHOLD
+import Constants.{MCTSSIMULATIONCOUNT, MCTSTHRESHOLD}
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -6,44 +6,36 @@ import java.util.concurrent.atomic.AtomicBoolean
 import scala.util.Random
 
 class MCTSAgent(val board: Board):
-    private val running = new AtomicBoolean(true)
     private var node = new Node(null, board.currentTurn, board.clone())
-    private val lock = new Object()
+    @volatile var running = AtomicBoolean(true) // Controls if the loop runs
+    private val lock = new Object
 
     def start(): Unit = Future {
         while running.get() do
-            lock.synchronized {
-                if running.get() then  // Double check inside sync block
-                    node.simulation()
-            }
+            node.simulation()
     }
 
-    def stop(): Unit =
+
+    def updateOpponentMoveAndGetBestMove(move: (Int, Int)): (Int, Int) = lock.synchronized {
+        println("ASD")
         running.set(false)
+        lock.notifyAll()
+        print("wait")
+        newTree(move)
+        while node.visitCount < MCTSTHRESHOLD do
+            //println(node.visitCount + "/" + MCTSTHRESHOLD)
+            //println(node.board)
+            node.simulation()
 
-    def updateOpponentMoveAndGetBestMove(move: (Int, Int)): (Int, Int) =
-        lock.synchronized {
-            // Stop background simulations
-            running.set(false)
+        val bestMove = node.bestMove
+        node = bestMove._2
 
-            // Update tree with opponent's move
-            newTree(move)
-
-            // Run simulations until threshold
-            var count = 0
-            while count < MCTSTHRESHOLD do
-                node.simulation()
-                count += 1
-
-            // Get best move
-            val bestMove = node.bestMove
-            node = bestMove._2
-
-            // Restart background simulations
-            running.set(true)
-
-            bestMove._1
-        }
+        // Restart background simulations
+        running.set(true)
+        lock.notifyAll()
+        if node != null then print(node)
+        bestMove._1
+    }
 
     private def newTree(move: (Int, Int)): Unit =
         node = node.childrens.getOrElse(move, new Node(null, -board.currentTurn, createNewBoard(move)))
