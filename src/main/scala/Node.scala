@@ -21,6 +21,8 @@ class Node(
     private def metric =
         if childrens.values.exists(child => child.winner.contains(-1)) then
             Double.MinValue
+        else if childrens.values.exists(child => child.winner.contains(1)) then 
+            Double.MaxValue    
         else
             visitCount*1.0
 

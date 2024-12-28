@@ -13,8 +13,22 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sbt: scala-sdk-3.3.4" level="project" />
     <orderEntry type="library" name="sbt: com.microsoft.onnxruntime:onnxruntime:1.15.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-base:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-base:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-controls:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-controls:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-fxml:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-fxml:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-graphics:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-graphics:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-media:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-media:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-swing:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-swing:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-web:22:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.openjfx:javafx-web:22:win:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.14:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala3-library_3:3.3.4:jar" level="project" />
-    <orderEntry type="library" name="scalafx.scalafx_3" level="project" />
+    <orderEntry type="library" name="sbt: org.scalafx:scalafx_3:22.0.0-R33:jar" level="project" />
   </component>
 </module>
