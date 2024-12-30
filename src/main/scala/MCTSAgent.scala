@@ -60,7 +60,7 @@ class MCTSAgent(val board: Board) extends Serializable:
         running.set(true)
         start()
         lock.notifyAll()
-        if node != null then printCmd(node.toString())
+//        if node != null then printCmd(node.toString())
         bestMove._1
     }
 
@@ -80,6 +80,7 @@ class MCTSAgent(val board: Board) extends Serializable:
      * @return new cloned board after the move
      */
     private def createNewBoard(move: (Int, Int)): Board =
+        printCmd("[DEBUG] MISS")
         val newBoard = node.board.clone()
         newBoard.placeStone(move, newBoard.currentTurn)
         newBoard

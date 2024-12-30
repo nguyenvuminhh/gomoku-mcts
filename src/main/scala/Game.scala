@@ -46,7 +46,6 @@ class Game(aiStarts: Boolean = true) extends Serializable:
         if aiStarts then
             val mid = SIZE / 2
             playMove(mid, mid, 1)
-            isPlayersTurn = true
             agent = MCTSAgent(mainBoard.clone())
 
         println(mainBoard)

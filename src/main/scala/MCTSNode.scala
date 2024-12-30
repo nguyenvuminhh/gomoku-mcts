@@ -23,7 +23,7 @@ class MCTSNode(
     /**
      * Total value/reward. WIN = 1, LOSE = -1, DRAW = 0
      */
-    var totalValue = 0
+    private var totalValue = 0
 
     /**
      * All posible moves (just count cells with at least 1 cell near it 
@@ -49,7 +49,7 @@ class MCTSNode(
      * Variable indicating if the node has a faild child.
      * Always false when the next player to play is player
      */
-    private var hasFailedChild = false
+    private var hasFailedChildO = false
 
     /**
      * A method to check if the node has a faild grandchild.
@@ -59,7 +59,7 @@ class MCTSNode(
      * @return true if there exists a child has a failed child
      *         false otherwise
      */
-    private def hasAllFailedGrandChildren: Boolean = children.forall((_, child) => child.hasFailedChild)
+    private def hasAllChildrenWithFailedChildX: Boolean = children.forall((_, child) => child.hasFailedChildO)
 
     /**
      * A method to check if the node is fully expanded
@@ -81,25 +81,25 @@ class MCTSNode(
         if visitCount == 0 /*|| hasFailedGrandChild*/ then
             Double.MaxValue
         // CASE HAS A FAILED CHILD
-        else if hasFailedChild then
-            Double.MinValue
+//        else if hasFailedChildO then
+//            Double.MinValue
         // ELSE
         else
             -nextPlayerTurn*totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
 
     /**
-     * A method return the metric that decide which node to be the best move
+     * A method returdn the metric that decide which node to be the best move
      *
      * @return -inf if there is a failed child or a child has all failed gc
      *         visitCount otherwise
      */
     private def metric =
-        if hasFailedChild then
+        if hasFailedChildO then
             Double.MinValue
-        else if children.exists((_, child) => child.hasAllFailedGrandChildren) then
+        else if children.exists((_, child) => child.hasAllChildrenWithFailedChildX) then
             Double.MinValue
         else
-            visitCount*1.0
+            visitCount*1.0 + totalValue
 
     /**
      * A method return best move
@@ -147,7 +147,7 @@ class MCTSNode(
         val newNode = new MCTSNode(this, -nextPlayerTurn, newBoard)
         if gameResult._2 then
             newNode.winner = Some(gameResult._1)
-            hasFailedChild = newNode.winner.contains(-1)
+            if newNode.winner.contains(-1) then hasFailedChildO = true
 
         // APPEND AND RETURN
         children.addOne(nextMove, newNode)
@@ -216,15 +216,16 @@ class MCTSNode(
         "Value: " + totalValue + " | Visit counts: " + visitCount + "\n" +
         "Metric: " + metric + "\n" +
         (if nextPlayerTurn == 1 then "AI's turn" else "Player's turn") + "\n" +
-        "Has failed child: " + hasFailedChild + "\n" +
-        "Has all failed grandchild: " + hasAllFailedGrandChildren + "\n"
+        "Has failed child: " + hasFailedChildO + "\n" +
+        "Has all failed grandchild: " + hasAllChildrenWithFailedChildX + "\n"
 
-    def childrenToString =
+    def childrenToString: String =
         val result = new StringBuilder("============================================\n")
 
         result.append(board).append("\n")
         for (move, childNode) <- children do
-            result.append("  ").append(move).append(" -> ").append(childNode.metric).append("\n")
-
+            result.append(s"  $move -> ${childNode.totalValue}/${childNode.visitCount} | " +
+                s"${childNode.metric} | " +
+                s"${childNode.children.exists(_._2.hasAllChildrenWithFailedChildX)}\n")
         result.toString()
 
