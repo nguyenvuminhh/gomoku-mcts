@@ -1,8 +1,8 @@
 // Game.scala
 import scala.io.StdIn.readLine
-import Constants.SIZE
+import Constants.{SIZE, printCmd}
 
-class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializable:
+class Game(aiStarts: Boolean = true) extends Serializable:
     /**
      * A variable used to indicate whether the next turn is
      * player's turn
@@ -32,7 +32,7 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializab
     /**
      * A variable holding the last move made by AI
      */
-    var lastAIMove: (Int, Int) = (-1, -1)
+    var lastMove: (Int, Int) = (-1, -1)
     /**
      * An object of Monte Carlo Search Tree agent
      */
@@ -48,7 +48,8 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializab
             playMove(mid, mid, 1)
             isPlayersTurn = true
             agent = MCTSAgent(mainBoard.clone())
-            print(mainBoard)
+
+        println(mainBoard)
         agent.start()
 
     /**
@@ -65,7 +66,9 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializab
         if !mainBoard.isValidCoord(x, y) || mainBoard.isOccupied(x, y) then return false
 
         // PLACE THE STONE
-        val (winner, finished) = mainBoard.placeStone(x, y, player)
+        val gameResult = mainBoard.placeStone(x, y, player)
+        winner = gameResult._1
+        finished = gameResult._2
         if finished then
             winner match
                 case 1 => printCmd("GAME OVER! AI WIN!")
@@ -89,6 +92,7 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializab
         if !playMove(x, y, -1) then
             isPlayersTurn = true
             return false
+        lastMove = (x, y)
         true
 
     /**
@@ -108,17 +112,11 @@ class Game(aiStarts: Boolean = true, VERBOSE: Boolean = true) extends Serializab
             printCmd("No possible moves left. Game Over.")
             finished = true
             return true
-        
+
         // PLACE MOVE
         if !playMove(bestX, bestY, 1) then
             throw new IllegalArgumentException(s"AI made illegal move: $bestX $bestY")
-        lastAIMove = (bestX, bestY)
+        lastMove = (bestX, bestY)
         isPlayersTurn = true
         true
-
-    /**
-     * A print method for logging
-     * @param message message to be printed
-     */
-    private def printCmd(message: String): Unit = if VERBOSE then println(message)
 

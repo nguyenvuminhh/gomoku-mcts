@@ -11,6 +11,20 @@ class Board (
     ) extends Serializable:
 
     /**
+     * A variable used to indicate whether the game is finished
+     */
+    var finished: Boolean = false
+
+    /**
+     * A variable used to indicate the winner once the game is
+     * finished
+     *
+     * @return 1 if AI win
+     *         -1 if player win
+     *         0 if draw
+     */
+    var winner: Int = 0
+    /**
      * A method used to hash the matrix
      *
      * @return hashed object
@@ -149,9 +163,11 @@ class Board (
      * @return A board with coord
      */
     override def toString: String =
-        val sb = new StringBuilder("   ")
-        sb.append("012345678901234").append("\n")
+        val sb = new StringBuilder("")
+        sb.append(" _________________________________").append("\n")
+        sb.append("|   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 |").append("\n")
         for y <- 0 until SIZE do
+            sb.append("|")
             sb.append(f"$y%2d ")
             for x <- 0 until SIZE do
                 sb.append(matrix(y)(x) match {
@@ -159,8 +175,11 @@ class Board (
                     case -1 => "O"
                     case _ => "-"
                 })
+                sb.append(" ")
+            sb.append("|")
             sb.append("\n")
-        sb.append("   012345678901234")
+        sb.append("|   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 |").append("\n")
+        sb.append("|_________________________________|")
         sb.toString
 end Board
 

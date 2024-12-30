@@ -1,4 +1,4 @@
-import Constants.MCTSTHRESHOLD
+import Constants.{EXPORTNODE, IMPORTNODE, MCTSTHRESHOLD, printCmd}
 
 import java.io.{File, FileInputStream, FileOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.util.concurrent.atomic.AtomicBoolean
@@ -14,7 +14,7 @@ class MCTSAgent(val board: Board) extends Serializable:
     /**
      * Reference to the original node for serializing
      */
-    private val originalNode: Node = node
+    private val originalNode: MCTSNode = node
 
     /**
      * A flag for MCTS' thread
@@ -48,9 +48,10 @@ class MCTSAgent(val board: Board) extends Serializable:
         // UPDATE NODE/TREE AFTER THE OPPONENT'S MOVE
         newTree(move)
 
+        printCmd("Moves considered. Thinking next move...")
         // KEEP SIMULATING UNTIL REACHING THRESHOLD
         while node.visitCount < MCTSTHRESHOLD do node.simulation()
-
+        printCmd(node.childrenToString)
         // GET THE BEST MOVE
         val bestMove = node.bestMove
         node = bestMove._2
@@ -59,7 +60,7 @@ class MCTSAgent(val board: Board) extends Serializable:
         running.set(true)
         start()
         lock.notifyAll()
-//        if node != null then print(node)
+        if node != null then printCmd(node.toString())
         bestMove._1
     }
 
@@ -70,7 +71,7 @@ class MCTSAgent(val board: Board) extends Serializable:
      * @param move opponent's move
      */
     private def newTree(move: (Int, Int)): Unit =
-        node = node.children.getOrElse(move, new Node(node, -board.currentTurn, createNewBoard(move), isRoot = true))
+        node = node.children.getOrElse(move, new MCTSNode(node, -board.currentTurn, createNewBoard(move), isRoot = true))
 
     /**
      * A method that create a new board for the new state (if cannot reuse)
@@ -79,7 +80,7 @@ class MCTSAgent(val board: Board) extends Serializable:
      * @return new cloned board after the move
      */
     private def createNewBoard(move: (Int, Int)): Board =
-        val newBoard = board.clone()
+        val newBoard = node.board.clone()
         newBoard.placeStone(move, newBoard.currentTurn)
         newBoard
 
@@ -87,6 +88,8 @@ class MCTSAgent(val board: Board) extends Serializable:
      * A method that serialize the original root node
      */
     def saveRootNode(): Unit =
+        if !EXPORTNODE then return
+
         val filePath = "src/main/resources/node.obj"
         val file = new File(filePath)
 
@@ -108,19 +111,22 @@ class MCTSAgent(val board: Board) extends Serializable:
      * @return node from file if found
      *         new node otherwise
      */
-    private def loadRootNode(): Node =
+    private def loadRootNode(): MCTSNode =
+        if !IMPORTNODE then return new MCTSNode(null, board.currentTurn, board.clone(), isRoot = true)
+
         val filePath = "src/main/resources/node.obj"
         val file = new File(filePath)
 
         // IF FILE NOT FOUND RETURN NEW NODE
         if !file.exists() then
-            return new Node(null, board.currentTurn, board.clone(), isRoot = true)
+            return new MCTSNode(null, board.currentTurn, board.clone(), isRoot = true)
 
         // IF FILE FOUND THEN LOAD AND RETURN
         val fileInput = new FileInputStream(filePath)
         val objectInput = new ObjectInputStream(fileInput)
-        val loadedNode = objectInput.readObject().asInstanceOf[Node]
-        println(loadedNode)
+        val loadedNode = objectInput.readObject().asInstanceOf[MCTSNode]
+        printCmd("Loaded node: ")
+        printCmd(loadedNode.toString())
         objectInput.close()
         fileInput.close()
         loadedNode
