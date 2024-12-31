@@ -77,7 +77,7 @@ class Board (
         require(math.abs(value) == 1, "Value must be 1 or -1")
         require(isValidCoord(x, y), "Coord must be valid")
         require(!isOccupied(x, y), "Cell must be empty")
-        require(currentTurn == value)
+//        require(currentTurn == value)
         step += 1
         matrix(y)(x) = value
 

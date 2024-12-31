@@ -3,7 +3,7 @@ import Constants.{EXPORTNODE, IMPORTNODE, MCTSTHRESHOLD, printCmd}
 import java.io.{File, FileInputStream, FileOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.util.concurrent.atomic.AtomicBoolean
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, blocking}
 
 class MCTSAgent(val board: Board) extends Serializable:
     /**
@@ -50,12 +50,12 @@ class MCTSAgent(val board: Board) extends Serializable:
 
         printCmd("Moves considered. Thinking next move...")
         // KEEP SIMULATING UNTIL REACHING THRESHOLD
-        while node.visitCount < MCTSTHRESHOLD do node.simulation()
-        printCmd(node.childrenToString)
+        while node.visitCount < MCTSTHRESHOLD do
+            node.simulation()
         // GET THE BEST MOVE
-        val bestMove = node.bestMove
+        val bestMove = node.bestMoveX
+        printCmd("Next move is " + bestMove._1)
         node = bestMove._2
-
         // RESTART THE SIMULATION THREAD ON THE NEW NODE
         running.set(true)
         start()
@@ -80,7 +80,6 @@ class MCTSAgent(val board: Board) extends Serializable:
      * @return new cloned board after the move
      */
     private def createNewBoard(move: (Int, Int)): Board =
-        printCmd("[DEBUG] MISS")
         val newBoard = node.board.clone()
         newBoard.placeStone(move, newBoard.currentTurn)
         newBoard

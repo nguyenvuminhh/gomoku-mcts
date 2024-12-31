@@ -47,8 +47,25 @@ class Game(aiStarts: Boolean = true) extends Serializable:
             val mid = SIZE / 2
             playMove(mid, mid, 1)
             agent = MCTSAgent(mainBoard.clone())
+//        playMove(7, 7, -1)
+//        playMove(7, 6, -1)
+//        playMove(7, 5, -1)
+////        playMove(6, 6, -1)
+//        playMove(5, 5, -1)
+//        playMove(8, 5, -1)
+//        playMove(8, 4, -1)
+//        playMove(8, 10, -1)
+//
+//        playMove(4, 4, 1)
+//        playMove(6, 5, 1)
+//        playMove(8, 6, 1)
+//        playMove(8, 7, 1)
+//        playMove(8, 8, 1)
+//        playMove(8, 9, 1)
+//        playMove(7, 8, 1)
+////        playMove(6, 9, 1)
+        agent = MCTSAgent(mainBoard.clone())
 
-        println(mainBoard)
         agent.start()
 
     /**

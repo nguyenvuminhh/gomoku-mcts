@@ -1,4 +1,4 @@
-import Constants.MCTSSIMULATIONCOUNT
+import Constants.{MCTSSIMULATIONCOUNT, printCmd}
 
 import scala.annotation.tailrec
 import scala.util.Random
@@ -59,7 +59,7 @@ class MCTSNode(
      * @return true if there exists a child has a failed child
      *         false otherwise
      */
-    private def hasAllChildrenWithFailedChildX: Boolean = children.forall((_, child) => child.hasFailedChildO)
+    def hasAllChildrenWithFailedChildX: Boolean = children.forall((_, child) => child.hasFailedChildO)
 
     /**
      * A method to check if the node is fully expanded
@@ -77,15 +77,10 @@ class MCTSNode(
      *         totalValue/visitCount + sqrt(2 * ln(ni)/n) otherwise
      */
     private def ucb =
-        // CASE NOT YET VISITED OR HAS A FAILED GRANDCHILD
-        if visitCount == 0 /*|| hasFailedGrandChild*/ then
+        if visitCount == 0 then
             Double.MaxValue
-        // CASE HAS A FAILED CHILD
-//        else if hasFailedChildO then
-//            Double.MinValue
-        // ELSE
         else
-            -nextPlayerTurn*totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
+            totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
 
     /**
      * A method returdn the metric that decide which node to be the best move
@@ -93,7 +88,7 @@ class MCTSNode(
      * @return -inf if there is a failed child or a child has all failed gc
      *         visitCount otherwise
      */
-    private def metric =
+    private def metricO =
         if hasFailedChildO then
             Double.MinValue
         else if children.exists((_, child) => child.hasAllChildrenWithFailedChildX) then
@@ -107,11 +102,25 @@ class MCTSNode(
      * @return ((-1, -1), null) if game ended
      *         (move, successor node) otherwise
      */
-    def bestMove: ((Int, Int), MCTSNode) =
+    def bestMoveX: ((Int, Int), MCTSNode) =
         if children.nonEmpty then
-            children.maxBy((_, child) => child.metric)
+            children.maxBy((_, child) => child.metricO)
         else
             ((-1, -1), null)
+
+    def expandToDepth(depth: Int = 4): Unit =
+        // Skip if this is a terminal node
+        if winner.nonEmpty || hasFailedChildO then return
+
+        // If we've reached target depth, stop expanding
+        if depth == 0 then return
+
+        // Generate and expand all possible moves if not already expanded
+        while !fullyExpanded do
+            expand()
+        // Recursively expand all children
+        for childNode <- children.values do
+            childNode.expandToDepth(depth - 1)
 
     /**
      * A method used to select node to expand
@@ -147,7 +156,8 @@ class MCTSNode(
         val newNode = new MCTSNode(this, -nextPlayerTurn, newBoard)
         if gameResult._2 then
             newNode.winner = Some(gameResult._1)
-            if newNode.winner.contains(-1) then hasFailedChildO = true
+            if newNode.winner.contains(-1) then
+                hasFailedChildO = true
 
         // APPEND AND RETURN
         children.addOne(nextMove, newNode)
@@ -214,18 +224,9 @@ class MCTSNode(
         "Current Board: \n" +
         board.toString() + "\n" +
         "Value: " + totalValue + " | Visit counts: " + visitCount + "\n" +
-        "Metric: " + metric + "\n" +
+        "Metric: " + metricO + "\n" +
         (if nextPlayerTurn == 1 then "AI's turn" else "Player's turn") + "\n" +
         "Has failed child: " + hasFailedChildO + "\n" +
         "Has all failed grandchild: " + hasAllChildrenWithFailedChildX + "\n"
 
-    def childrenToString: String =
-        val result = new StringBuilder("============================================\n")
-
-        result.append(board).append("\n")
-        for (move, childNode) <- children do
-            result.append(s"  $move -> ${childNode.totalValue}/${childNode.visitCount} | " +
-                s"${childNode.metric} | " +
-                s"${childNode.children.exists(_._2.hasAllChildrenWithFailedChildX)}\n")
-        result.toString()
 

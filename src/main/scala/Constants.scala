@@ -46,7 +46,7 @@ object Constants extends Serializable:
       MCTSSIMULATIONCOUNT = 1
     else if level == 5 then
       MCTSTHRESHOLD = 20000
-      MCTSSIMULATIONCOUNT = 1
+      MCTSSIMULATIONCOUNT = 3
 
   /**
    * A print method for logging
