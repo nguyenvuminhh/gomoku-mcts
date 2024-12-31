@@ -6,7 +6,7 @@ import scalafx.scene.control.{Alert, Button, ButtonType, Label}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Rectangle}
-import Constants.{SIZE, printCmd, setDifficulties}
+import GameSettings.{SIZE, printCmd, setDifficulties}
 import javafx.application.Application.launch
 import scalafx.scene.control.Alert.AlertType
 
@@ -14,30 +14,46 @@ object MainGUI extends JFXApp3:
     override def start(): Unit =
         try
             printCmd("Starting MainGUI initialization...")
-            val ButtonType1 = new ButtonType("Level 1")
-            val ButtonType2 = new ButtonType("Level 2")
-            val ButtonType3 = new ButtonType("Level 3")
-            val ButtonType4 = new ButtonType("Level 4")
-            val ButtonType5 = new ButtonType("Level 5")
+            val ButtonLevel1 = new ButtonType("Level 1")
+            val ButtonLevel2 = new ButtonType("Level 2")
+            val ButtonLevel3 = new ButtonType("Level 3")
+            val ButtonLevel4 = new ButtonType("Level 4")
+            val ButtonLevel5 = new ButtonType("Level 5")
 
-            val alert = new Alert(AlertType.Confirmation) {
+            val alertDifficulties = new Alert(AlertType.Confirmation) {
                 initOwner(stage)
                 title = "Select Difficulties"
                 headerText = "NOTE: The more difficult, the more time the computer takes in each move."
                 contentText = "Choose your option. Level 2-3 should be OK"
                 buttonTypes = Seq(
-                    ButtonType1, ButtonType2, ButtonType3, ButtonType4, ButtonType5)
+                    ButtonLevel1, ButtonLevel2, ButtonLevel3, ButtonLevel4, ButtonLevel5)
             }
 
-            val result = alert.showAndWait()
+            val resultDifficulties = alertDifficulties.showAndWait()
 
-            result match {
-                case Some(ButtonType1) => setDifficulties(1)
-                case Some(ButtonType2) => setDifficulties(2)
-                case Some(ButtonType3) => setDifficulties(3)
-                case Some(ButtonType4) => setDifficulties(4)
-                case Some(ButtonType5) => setDifficulties(5)
+            resultDifficulties match
+                case Some(ButtonLevel1) => setDifficulties(1)
+                case Some(ButtonLevel2) => setDifficulties(2)
+                case Some(ButtonLevel3) => setDifficulties(3)
+                case Some(ButtonLevel4) => setDifficulties(4)
+                case Some(ButtonLevel5) => setDifficulties(5)
+
+
+            val ButtonAIFirst = new ButtonType("AI")
+            val ButtonHumanFirst = new ButtonType("Human")
+            val alertAIFirst = new Alert(AlertType.Confirmation) {
+                initOwner(stage)
+                title = "Who goes first"
+                headerText = "Choose who go first."
+                contentText = "Choose your option."
+                buttonTypes = Seq(
+                    ButtonAIFirst, ButtonHumanFirst)
             }
+
+            val resultAIFirst = alertAIFirst.showAndWait()
+            resultAIFirst match
+                case Some(ButtonAIFirst) => GameSettings.AIFIRST = true
+                case Some(ButtonHumanFirst) => GameSettings.AIFIRST = false
 
             val game = new Game(aiStarts = true)
             printCmd("Game instance created")
@@ -140,7 +156,7 @@ object MainGUI extends JFXApp3:
                             stones(i)(j).fill = if (value == 1) Color.Black else Color.White
 
                         if game.finished then
-                            game.agent.saveRootNode()
+//                            game.agent.saveRootNode()
                             game.winner match
                                 case 1 => status.text = "Game Over - AI Wins!"
                                 case -1 => status.text = "Game Over - You Win!"

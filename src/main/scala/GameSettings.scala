@@ -1,11 +1,16 @@
 /**
- * Object Constants to hold game settings
+ * Object GameSettings to hold game settings
  */
-object Constants extends Serializable:
+object GameSettings extends Serializable:
   /**
    * Board size
    */
   var SIZE = 15
+
+  /**
+   * A variable indicate if AI goes first
+   */
+  var AIFIRST = false
 
   /**
    * Minimum number of simulation to be made before giving out decision
@@ -29,24 +34,10 @@ object Constants extends Serializable:
   val EXPORTNODE = false
 
   /**
-   *
+   * A method used to set difficulties
    */
   def setDifficulties(level: Int): Unit =
-    if level == 1 then
-      MCTSTHRESHOLD = 2500
-      MCTSSIMULATIONCOUNT = 1
-    else if level == 2 then
-      MCTSTHRESHOLD = 5000
-      MCTSSIMULATIONCOUNT = 1
-    else if level == 3 then
-      MCTSTHRESHOLD = 10000
-      MCTSSIMULATIONCOUNT = 1
-    else if level == 4 then
-      MCTSTHRESHOLD = 15000
-      MCTSSIMULATIONCOUNT = 1
-    else if level == 5 then
-      MCTSTHRESHOLD = 20000
-      MCTSSIMULATIONCOUNT = 3
+    MCTSTHRESHOLD = 3000*level
 
   /**
    * A print method for logging

@@ -1,7 +1,7 @@
 package dump
 
 //// Agent.scala
-//import Constants.{DEPTH, SIZE}
+//import GameSettings.{DEPTH, SIZE}
 //
 //import java.lang.Math.random
 //

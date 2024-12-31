@@ -1,19 +1,20 @@
-import Constants.{MCTSSIMULATIONCOUNT, printCmd}
+import GameSettings.{MCTSSIMULATIONCOUNT, printCmd}
 
 import scala.annotation.tailrec
 import scala.util.Random
+import scala.collection.parallel.CollectionConverters._
 
 @SerialVersionUID(1L)
 class MCTSNode(
                   var parent: MCTSNode,
                   val nextPlayerTurn: Int,
                   val board: Board,
-                  @transient var isRoot: Boolean = false,
+//                  @transient var isRoot: Boolean = false,
           ) extends Serializable:
     /** 
      * Default variable for serializing
      */
-    var _isRoot = false
+//    var _isRoot = false
 
     /**
      * Total visit count
@@ -103,10 +104,12 @@ class MCTSNode(
      *         (move, successor node) otherwise
      */
     def bestMoveX: ((Int, Int), MCTSNode) =
-        if children.nonEmpty then
-            children.maxBy((_, child) => child.metricO)
-        else
-            ((-1, -1), null)
+        val sortedChildren = children.toList.sortBy((_, gchild) => -gchild.metricO)
+        for (move, child) <- sortedChildren do
+            child.expandToDepth(3)
+            if !child.children.exists((_, child) => child.hasAllChildrenWithFailedChildX) then
+                return (move, child)
+        sortedChildren.headOption.getOrElse(((-1, -1), null))
 
     def expandToDepth(depth: Int = 4): Unit =
         // Skip if this is a terminal node
@@ -119,8 +122,7 @@ class MCTSNode(
         while !fullyExpanded do
             expand()
         // Recursively expand all children
-        for childNode <- children.values do
-            childNode.expandToDepth(depth - 1)
+        children.values.toVector.par.foreach(_.expandToDepth(depth-1))
 
     /**
      * A method used to select node to expand
@@ -172,7 +174,7 @@ class MCTSNode(
     final private def update(value: Int): Unit =
         visitCount += 1
         totalValue += value
-        if !this.isRoot && parent != null then parent.update(value)
+        if parent != null then parent.update(value)
 
     /**
      * A method used to simulate the new node.

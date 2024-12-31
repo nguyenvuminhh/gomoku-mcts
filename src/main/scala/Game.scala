@@ -1,6 +1,6 @@
 // Game.scala
 import scala.io.StdIn.readLine
-import Constants.{SIZE, printCmd}
+import GameSettings.{SIZE, printCmd}
 
 class Game(aiStarts: Boolean = true) extends Serializable:
     /**

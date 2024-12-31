@@ -1,7 +1,7 @@
 import scala.util.control.Breaks._
 import scala.collection.mutable.ArrayBuffer
 
-import Constants.SIZE
+import GameSettings.SIZE
 
 @SerialVersionUID(1L)
 class Board (
