@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="typesafe.play.build.link" type="repository">
+    <properties maven-id="com.typesafe.play:build-link:2.8.21" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/typesafe/play/build-link/2.8.21/build-link-2.8.21.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/typesafe/play/play-exceptions/2.8.21/play-exceptions-2.8.21.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -13,7 +13,49 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sbt: scala-sdk-3.3.4" level="project" />
+    <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-annotations:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-core:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-databind:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.module:jackson-module-parameter-names:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.module:jackson-module-scala_3:2.14.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.errorprone:error_prone_annotations:2.21.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:failureaccess:1.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:guava:32.1.3-jre:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.inject.extensions:guice-assistedinject:6.0.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.inject:guice:7.0.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.j2objc:j2objc-annotations:2.8:jar" level="project" />
     <orderEntry type="library" name="sbt: com.microsoft.onnxruntime:onnxruntime:1.15.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.thoughtworks.paranamer:paranamer:2.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor-typed_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-protobuf-v3_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-serialization-jackson_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-slf4j_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-stream_3:2.6.21:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-build-link:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-configuration_3:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-exceptions:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-functional_3:2.10.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-guice_3:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-json_3:2.10.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-streams_3:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play_3:2.9.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:twirl-api_3:1.6.6:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe:config:1.4.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe:ssl-config-core_3:0.6.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.jsonwebtoken:jjwt-api:0.11.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.jsonwebtoken:jjwt-impl:0.11.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.jsonwebtoken:jjwt-jackson:0.11.5:jar" level="project" />
+    <orderEntry type="library" name="sbt: jakarta.inject:jakarta.inject-api:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: javax.inject:javax.inject:1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.checkerframework:checker-qual:3.37.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.lz4:lz4-java:1.8.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.openjfx:javafx-base:22:jar" level="project" />
     <orderEntry type="library" name="sbt: org.openjfx:javafx-base:22:win:jar" level="project" />
     <orderEntry type="library" name="sbt: org.openjfx:javafx-controls:22:jar" level="project" />
@@ -28,9 +70,16 @@
     <orderEntry type="library" name="sbt: org.openjfx:javafx-swing:22:win:jar" level="project" />
     <orderEntry type="library" name="sbt: org.openjfx:javafx-web:22:jar" level="project" />
     <orderEntry type="library" name="sbt: org.openjfx:javafx-web:22:win:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.reactivestreams:reactive-streams:1.0.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-java8-compat_3:1.0.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parallel-collections_3:1.1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_3:2.3.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-xml_3:2.2.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.14:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scala-lang:scala3-library_3:3.3.4:jar" level="project" />
     <orderEntry type="library" name="sbt: org.scalafx:scalafx_3:22.0.0-R33:jar" level="project" />
-    <orderEntry type="library" name="scala.lang.modules.parallel.collections_2.13" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:jcl-over-slf4j:2.0.13:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:jul-to-slf4j:2.0.13:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:slf4j-api:2.0.13:jar" level="project" />
   </component>
 </module>

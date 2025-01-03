@@ -1,7 +1,9 @@
-import scala.util.control.Breaks._
-import scala.collection.mutable.ArrayBuffer
+package logic
 
-import GameSettings.SIZE
+import logic.GameSettings.SIZE
+
+import scala.collection.mutable.ArrayBuffer
+import scala.util.control.Breaks.*
 
 @SerialVersionUID(1L)
 class Board (
@@ -56,7 +58,7 @@ class Board (
      * @return true if is in range (0, 0) -> (SIZE, SIZE)
      *         false otherwise
      */
-    def isValidCoord(x: Int, y: Int) = 0 <= x && x < SIZE && 0 <= y && y < SIZE
+    def isValidCoord(x: Int, y: Int): Boolean = 0 <= x && x < SIZE && 0 <= y && y < SIZE
 
     /**
      * A method used to overload the method placeStone(x: Int, y: Int, value: Int)

@@ -1,20 +1,17 @@
-import GameSettings.{MCTSSIMULATIONCOUNT, printCmd}
+package logic
 
+import logic.GameSettings.{MCTSSIMULATIONCOUNT, printCmd}
+
+import java.util.concurrent.atomic.AtomicInteger
 import scala.annotation.tailrec
+import scala.collection.parallel.CollectionConverters.*
 import scala.util.Random
-import scala.collection.parallel.CollectionConverters._
 
-@SerialVersionUID(1L)
 class MCTSNode(
-                  var parent: MCTSNode,
-                  val nextPlayerTurn: Int,
-                  val board: Board,
-//                  @transient var isRoot: Boolean = false,
-          ) extends Serializable:
-    /** 
-     * Default variable for serializing
-     */
-//    var _isRoot = false
+          var parent: MCTSNode,
+          val nextPlayerTurn: Int,
+          val board: Board,
+      ):
 
     /**
      * Total visit count
@@ -60,7 +57,7 @@ class MCTSNode(
      * @return true if there exists a child has a failed child
      *         false otherwise
      */
-    def hasAllChildrenWithFailedChildX: Boolean = children.forall((_, child) => child.hasFailedChildO)
+    private def hasAllChildrenWithFailedChildX: Boolean = children.nonEmpty && children.forall((_, child) => child.hasFailedChildO)
 
     /**
      * A method to check if the node is fully expanded
@@ -81,7 +78,7 @@ class MCTSNode(
         if visitCount == 0 then
             Double.MaxValue
         else
-            totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
+            -nextPlayerTurn*totalValue*1.0/visitCount + Math.sqrt(2 * Math.log(parent.visitCount) / visitCount)
 
     /**
      * A method returdn the metric that decide which node to be the best move
@@ -95,7 +92,7 @@ class MCTSNode(
         else if children.exists((_, child) => child.hasAllChildrenWithFailedChildX) then
             Double.MinValue
         else
-            visitCount*1.0 + totalValue
+            visitCount*1.0
 
     /**
      * A method return best move
@@ -111,7 +108,12 @@ class MCTSNode(
                 return (move, child)
         sortedChildren.headOption.getOrElse(((-1, -1), null))
 
-    def expandToDepth(depth: Int = 4): Unit =
+    /**
+     * A method that fully expand a node to a specific depth
+     *
+     * @param depth the depth limit
+     */
+    private def expandToDepth(depth: Int): Unit =
         // Skip if this is a terminal node
         if winner.nonEmpty || hasFailedChildO then return
 
@@ -172,7 +174,7 @@ class MCTSNode(
      */
     @tailrec
     final private def update(value: Int): Unit =
-        visitCount += 1
+        visitCount += MCTSSIMULATIONCOUNT
         totalValue += value
         if parent != null then parent.update(value)
 
@@ -192,7 +194,8 @@ class MCTSNode(
                 nodeToExpand.expand()
 
         // SIMULATE `MCTSSIMULATIONCOUNT` TIMES
-        for _ <- 0 until MCTSSIMULATIONCOUNT do
+        val resultSum = new AtomicInteger(0)
+        for _ <- (0 until MCTSSIMULATIONCOUNT).par do
             // SIMULATION (only if no winner yet)
             val result =
                 if newNode.winner.nonEmpty then
@@ -214,12 +217,14 @@ class MCTSNode(
                     simResult._1
 
             // BACKPROPAGATION
-            newNode.update(result)
+            resultSum.addAndGet(result)
+
+        newNode.update(resultSum.get())
 
     /**
      * Overiding toString
      * 
-     * @return Board + totalValue + visitCount + 
+     * @return string description of the node
      */
     override def toString: String =
         "============================================\n" +

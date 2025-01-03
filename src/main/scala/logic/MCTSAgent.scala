@@ -1,4 +1,6 @@
-import GameSettings.{EXPORTNODE, IMPORTNODE, MCTSTHRESHOLD, printCmd}
+package logic
+
+import logic.GameSettings.{EXPORTNODE, IMPORTNODE, MCTSTHRESHOLD, printCmd}
 
 import java.io.{File, FileInputStream, FileOutputStream, ObjectInputStream, ObjectOutputStream}
 import java.util.concurrent.atomic.AtomicBoolean
@@ -9,7 +11,7 @@ class MCTSAgent(val board: Board) extends Serializable:
     /**
      * Starting node of MCTS
      */
-    private var node = loadRootNode()
+    private var node = new MCTSNode(null, board.currentTurn, board.clone())
 
     /**
      * A flag for MCTS' thread
@@ -48,7 +50,6 @@ class MCTSAgent(val board: Board) extends Serializable:
         while node.visitCount < MCTSTHRESHOLD do
             node.simulation()
         // GET THE BEST MOVE
-//        node.expandToDepth()
         val bestMove = node.bestMoveX
         printCmd("Next move is " + bestMove._1)
         node = bestMove._2
@@ -56,7 +57,6 @@ class MCTSAgent(val board: Board) extends Serializable:
         running.set(true)
         start()
         lock.notifyAll()
-//        if node != null then printCmd(node.toString())
         bestMove._1
     }
 
@@ -80,50 +80,3 @@ class MCTSAgent(val board: Board) extends Serializable:
         val newBoard = node.board.clone()
         newBoard.placeStone(move, newBoard.currentTurn)
         newBoard
-
-    /**
-     * A method that serialize the original root node
-     */
-//    def saveRootNode(): Unit =
-//        if !EXPORTNODE then return
-//
-//        val filePath = "src/main/resources/node.obj"
-//        val file = new File(filePath)
-//
-//        // DELETE OLD FILE IF EXISTS
-//        if (file.exists()) file.delete()
-//
-//        // SAVE NEW OBJECT
-//        val fileOutput = new FileOutputStream(filePath)
-//        val objectOutput = new ObjectOutputStream(fileOutput)
-//        objectOutput.writeObject(originalNode)
-//
-//        // CLOSE
-//        objectOutput.close()
-//        fileOutput.close()
-
-    /**
-     * A method that load the root node from file (if found).
-     *
-     * @return node from file if found
-     *         new node otherwise
-     */
-    private def loadRootNode(): MCTSNode =
-        if !IMPORTNODE then return new MCTSNode(null, board.currentTurn, board.clone())
-
-        val filePath = "src/main/resources/node.obj"
-        val file = new File(filePath)
-
-        // IF FILE NOT FOUND RETURN NEW NODE
-        if !file.exists() then
-            return new MCTSNode(null, board.currentTurn, board.clone())
-
-        // IF FILE FOUND THEN LOAD AND RETURN
-        val fileInput = new FileInputStream(filePath)
-        val objectInput = new ObjectInputStream(fileInput)
-        val loadedNode = objectInput.readObject().asInstanceOf[MCTSNode]
-        printCmd("Loaded node: ")
-        printCmd(loadedNode.toString())
-        objectInput.close()
-        fileInput.close()
-        loadedNode

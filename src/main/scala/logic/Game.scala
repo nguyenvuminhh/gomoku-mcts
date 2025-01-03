@@ -1,6 +1,9 @@
+package logic
+
 // Game.scala
+import logic.GameSettings.{SIZE, printCmd}
+
 import scala.io.StdIn.readLine
-import GameSettings.{SIZE, printCmd}
 
 class Game(aiStarts: Boolean = true) extends Serializable:
     /**
@@ -36,7 +39,7 @@ class Game(aiStarts: Boolean = true) extends Serializable:
     /**
      * An object of Monte Carlo Search Tree agent
      */
-    var agent = MCTSAgent(mainBoard.clone())
+    private var agent = MCTSAgent(mainBoard.clone())
 
     /**
      * A method used to initialize the game. AI will play its first move

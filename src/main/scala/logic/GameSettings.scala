@@ -1,3 +1,5 @@
+package logic
+
 /**
  * Object GameSettings to hold game settings
  */
@@ -20,7 +22,7 @@ object GameSettings extends Serializable:
   /**
    * Number of simulation per expanded node
    */
-  var MCTSSIMULATIONCOUNT = 1
+  var MCTSSIMULATIONCOUNT = 3
 
   /**
    * Print out loud or not
@@ -37,7 +39,7 @@ object GameSettings extends Serializable:
    * A method used to set difficulties
    */
   def setDifficulties(level: Int): Unit =
-    MCTSTHRESHOLD = 3000*level
+    MCTSTHRESHOLD = 3000*level*MCTSSIMULATIONCOUNT
 
   /**
    * A print method for logging
