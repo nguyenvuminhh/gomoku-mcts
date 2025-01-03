@@ -3,7 +3,7 @@
 ## General Description
 A Gomoku (five in a row in a 15x15 board) implementation using Monte Carlo Tree Search (MCTS) AI.
 
-Link To .jar File: [out/artifacts/gmk_scala_jar](https://github.com/nguyenvuminhh/gomoku-mcts/tree/master/out/artifacts/gmk_scala_jar)
+Link to .jar file: [out/artifacts/gmk_scala_jar](https://github.com/nguyenvuminhh/gomoku-mcts/tree/master/out/artifacts/gmk_scala_jar)
 
 ## Features
   - **Configurable settings**: Who goes first, number of expansions, number of simulations per expansion.
