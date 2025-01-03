@@ -1,0 +1,8 @@
+[debug] > Exec(pwd, None, None)
+[error] Not a valid command: pwd (similar: new, append)
+[error] Not a valid project ID: pwd
+[error] Expected ':'
+[error] Not a valid key: pwd (similar: ps, doc, update)
+[error] pwd
+[error]    ^
+[debug] > Exec(idea-shell, None, None)
