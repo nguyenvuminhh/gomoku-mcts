@@ -7,7 +7,7 @@ import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, ButtonType, Label}
+import scalafx.scene.control.{Alert, ButtonType, Dialog, DialogPane, Label, RadioButton, ToggleGroup}
 import scalafx.scene.layout.{GridPane, StackPane, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Rectangle}
@@ -17,45 +17,63 @@ object MainGUI extends JFXApp3:
         try
             printCmd("Starting MainGUI initialization...")
             // SELECT DIFFICULTIES
-            val ButtonLevel1 = new ButtonType("Level 1")
-            val ButtonLevel2 = new ButtonType("Level 2")
-            val ButtonLevel3 = new ButtonType("Level 3")
-            val ButtonLevel4 = new ButtonType("Level 4")
-            val ButtonLevel5 = new ButtonType("Level 5")
-
-            val alertDifficulties = new Alert(AlertType.Confirmation) {
-                initOwner(stage)
-                title = "Select Difficulties"
-                headerText = "NOTE: The more difficult, the more time the computer takes in each move."
-                contentText = "Choose your option. Level 2-3 should be OK"
-                buttonTypes = Seq(ButtonLevel1, ButtonLevel2, ButtonLevel3, ButtonLevel4, ButtonLevel5)
+            val difficultyGroup1 = new ToggleGroup()
+            val difficulties1 = (1 to 5).map { level =>
+                new RadioButton(s"${level*3000}") {
+                    toggleGroup = difficultyGroup1
+                    selected = level == 2
+                }
             }
 
-            val resultDifficulties = alertDifficulties.showAndWait()
-            val dialogPane = alertDifficulties.getDialogPane
-
-            resultDifficulties match
-                case Some(ButtonLevel1) => setDifficulties(1)
-                case Some(ButtonLevel2) => setDifficulties(2)
-                case Some(ButtonLevel3) => setDifficulties(3)
-                case Some(ButtonLevel4) => setDifficulties(4)
-                case Some(ButtonLevel5) => setDifficulties(5)
-
-            // SELECT WHO GOES FIRST
-            val ButtonAIFirst = new ButtonType("AI")
-            val ButtonHumanFirst = new ButtonType("Human")
-            val alertAIFirst = new Alert(AlertType.Confirmation) {
-                initOwner(stage)
-                title = "Who goes first"
-                headerText = "Choose who go first."
-                contentText = "Choose your option."
-                buttonTypes = Seq(ButtonAIFirst, ButtonHumanFirst)
+            val difficultyGroup2 = new ToggleGroup()
+            val difficulties2 = (1 to 5).map { level =>
+                new RadioButton(s"${level}") {
+                    toggleGroup = difficultyGroup2
+                    selected = level == 2
+                }
             }
 
-            val resultAIFirst = alertAIFirst.showAndWait()
-            resultAIFirst match
-                case Some(ButtonAIFirst) => GameSettings.AIFIRST = true
-                case Some(ButtonHumanFirst) => GameSettings.AIFIRST = false
+            val firstPlayerGroup = new ToggleGroup()
+            val aiFirst = new RadioButton("AI") {
+                toggleGroup = firstPlayerGroup
+            }
+            val humanFirst = new RadioButton("Human") {
+                toggleGroup = firstPlayerGroup
+                selected = true
+            }
+            val settingsDialog = new Dialog[Unit]() {
+                initOwner(stage)
+                title = "Game Settings"
+                dialogPane = new DialogPane {
+                    content = new VBox(20) {
+                        children = Seq(
+                            new Label("NOTE: The more simulations, the more time the computer takes in each move."),
+                            new Label("Select number of simulations needed to be done before making decision. Recommended: 9000 "),
+                            new VBox(10) {
+                                children = difficulties1
+                            },
+                            new Label("Select number of simulations in 1 expand (in parallelism)"),
+                            new VBox(10) {
+                                children = difficulties2
+                            },
+                            new Label("Who goes first?"),
+                            new VBox(10) {
+                                children = Seq(humanFirst, aiFirst)
+                            }
+                        )
+                        padding = Insets(20)
+                    }
+                    buttonTypes = Seq(ButtonType.OK)
+                }
+            }
+
+            val result = settingsDialog.showAndWait()
+            result match
+                case Some(ButtonType.OK) =>
+                    setDifficulties(difficulties1.indexWhere(_.selected.value) + 1, difficulties2.indexWhere(_.selected.value) + 1)
+                    GameSettings.AIFIRST = aiFirst.selected.value
+                case _ => Platform.exit()
+
 
             // INITIALIZE AND START GAME
             val game = new Game(aiStarts = GameSettings.AIFIRST)

@@ -38,8 +38,9 @@ object GameSettings extends Serializable:
   /**
    * A method used to set difficulties
    */
-  def setDifficulties(level: Int): Unit =
-    MCTSTHRESHOLD = 3000*level*MCTSSIMULATIONCOUNT
+  def setDifficulties(level: Int, par: Int): Unit =
+    MCTSTHRESHOLD = 3000*level*par
+    MCTSSIMULATIONCOUNT = par
 
   /**
    * A print method for logging
