@@ -7,7 +7,7 @@ import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, Button, ButtonType, Label}
+import scalafx.scene.control.{Alert, ButtonType, Label}
 import scalafx.scene.layout.{GridPane, StackPane, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Rectangle}
