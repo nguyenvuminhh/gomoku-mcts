@@ -1,7 +1,7 @@
 # Gomoku AI with Monte Carlo Tree Search Algorithm
 
 ## General Description
-A Gomoku (five in a row in a 15x15 board) implementation using Monte Carlo Tree Search (MCTS) AI.
+A Gomoku (five in a row in a 15x15 board) AI bot implementation using Monte Carlo Tree Search (MCTS) AI.
 
 Link to .jar file: [out/artifacts/gmk_scala_jar](https://github.com/nguyenvuminhh/gomoku-mcts/tree/master/out/artifacts/gmk_scala_jar)
 
